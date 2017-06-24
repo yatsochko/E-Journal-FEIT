@@ -1,8 +1,8 @@
 <?php
-
 /**
- * Контроллер CartController
+ * Контроллер SiteController
  */
+
 class SiteController
 {
 
