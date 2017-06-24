@@ -1,0 +1,1 @@
+        <ul class="nav nav-tabs">            <li class=""><a href="views/1.php">1-й курс</a></li>            <li class=""><a href="views/2.php">2-й курс</a></li>            <li class=""><a href="views/3.php">3-й курс</a></li>            <li class=""><a href="views/4.php">4-й курс</a></li>        </ul>    </div>    </body></hmtl>

@@ -1,70 +1,1 @@
-<?php
-
-class Router
-{
-    private  $routes;
-
-    public function __construct()
-    {
-        $routesPath = ROOT . '/config/routes.php';
-        $this->routes = include($routesPath);
-    }
-    /*
-     * Returns request string.
-     */
-    private function getUTI()
-    {
-        if(!empty($_SERVER['REQUEST_URI'])) {
-            return trim($_SERVER['REQUEST_URI'], '/');
-        }
-    }
-    public function run()
-    {
-        // 1. Получить строку запроса
-        $uri = $this->getUTI();
-
-        // 2. Проверить наличие такого запроса в routes.php
-        foreach ($this->routes as $uriPattern => $path) {
-
-            //  3. Сравниваем $uriPattern и $uri
-            if (preg_match("~$uriPattern~", $uri)) {
-                // 4. Если есть совпадение, определить какой контроллер
-                // и action обрабатывают запрос
-
-//                echo '<br>Где ищем (запрос, который набрал пользователь): '.$uri;
-//                echo '<br>Что ищем (совпадение из правила): '.$uriPattern;
-//                echo '<br>Где ищем (кто обрабатывает): '.$path;
-
-                // Получаем внутренний путь из внешнего согласно правилу.
-                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-
-//                echo '<br><br>Нужно сформировать: '.$internalRoute.'<br><br>';
-
-                // Теперь можем определить контроллер, action, параметры
-                $segments = explode('/', $internalRoute);
-
-                $controllerName = array_shift($segments).'Controller';
-                $controllerName = ucfirst($controllerName); // Делает первую букву строки заглавной
-
-                $actionName = 'action'.ucfirst(array_shift($segments));
-
-                $parameters = $segments; // Остатки в массиве это параметры, передадим их в action
-
-                // 5. Подключить файл класса-контроллера
-                $controllerFile = ROOT . '/controllers/'. $controllerName . '.php';
-                if (file_exists($controllerFile)){
-                    include_once($controllerFile);
-                }
-
-                // 6. Создать объект, вызвать метод (т.е. action)
-                $controllerObject = new $controllerName; // Создаем объект класса нужного контроллера
-//                $result = $controllerObject->$actionName($parameters);
-                // В данном случае параметры из масива будут передаватся как переменные
-                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
-                if ($result != null) {
-                    break;
-                }
-            }
-        }
-    }
-}
+<?phpclass Router{    private  $routes;    public function __construct()    {        $routesPath = ROOT . '/config/routes.php';        $this->routes = include($routesPath);    }    /*     * Returns request string.     */    private function getUTI()    {        if(!empty($_SERVER['REQUEST_URI'])) {            return trim($_SERVER['REQUEST_URI'], '/');        }    }    public function run()    {        // 1. РџРѕР»СѓС‡РёС‚СЊ СЃС‚СЂРѕРєСѓ Р·Р°РїСЂРѕСЃР°        $uri = $this->getUTI();        // 2. РџСЂРѕРІРµСЂРёС‚СЊ РЅР°Р»РёС‡РёРµ С‚Р°РєРѕРіРѕ Р·Р°РїСЂРѕСЃР° РІ routes.php        foreach ($this->routes as $uriPattern => $path) {            //  3. РЎСЂР°РІРЅРёРІР°РµРј $uriPattern Рё $uri            if (preg_match("~$uriPattern~", $uri)) {                // 4. Р•СЃР»Рё РµСЃС‚СЊ СЃРѕРІРїР°РґРµРЅРёРµ, РѕРїСЂРµРґРµР»РёС‚СЊ РєР°РєРѕР№ РєРѕРЅС‚СЂРѕР»Р»РµСЂ                // Рё action РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‚ Р·Р°РїСЂРѕСЃ//                echo '<br>Р“РґРµ РёС‰РµРј (Р·Р°РїСЂРѕСЃ, РєРѕС‚РѕСЂС‹Р№ РЅР°Р±СЂР°Р» РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ): '.$uri;//                echo '<br>Р§С‚Рѕ РёС‰РµРј (СЃРѕРІРїР°РґРµРЅРёРµ РёР· РїСЂР°РІРёР»Р°): '.$uriPattern;//                echo '<br>Р“РґРµ РёС‰РµРј (РєС‚Рѕ РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚): '.$path;                // РџРѕР»СѓС‡Р°РµРј РІРЅСѓС‚СЂРµРЅРЅРёР№ РїСѓС‚СЊ РёР· РІРЅРµС€РЅРµРіРѕ СЃРѕРіР»Р°СЃРЅРѕ РїСЂР°РІРёР»Сѓ.                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);//                echo '<br><br>РќСѓР¶РЅРѕ СЃС„РѕСЂРјРёСЂРѕРІР°С‚СЊ: '.$internalRoute.'<br><br>';                // РўРµРїРµСЂСЊ РјРѕР¶РµРј РѕРїСЂРµРґРµР»РёС‚СЊ РєРѕРЅС‚СЂРѕР»Р»РµСЂ, action, РїР°СЂР°РјРµС‚СЂС‹                $segments = explode('/', $internalRoute);                $controllerName = array_shift($segments).'Controller';                $controllerName = ucfirst($controllerName); // Р”РµР»Р°РµС‚ РїРµСЂРІСѓСЋ Р±СѓРєРІСѓ СЃС‚СЂРѕРєРё Р·Р°РіР»Р°РІРЅРѕР№                $actionName = 'action'.ucfirst(array_shift($segments));                $parameters = $segments; // РћСЃС‚Р°С‚РєРё РІ РјР°СЃСЃРёРІРµ СЌС‚Рѕ РїР°СЂР°РјРµС‚СЂС‹, РїРµСЂРµРґР°РґРёРј РёС… РІ action                // 5. РџРѕРґРєР»СЋС‡РёС‚СЊ С„Р°Р№Р» РєР»Р°СЃСЃР°-РєРѕРЅС‚СЂРѕР»Р»РµСЂР°                $controllerFile = ROOT . '/controllers/'. $controllerName . '.php';                if (file_exists($controllerFile)){                    include_once($controllerFile);                }                // 6. РЎРѕР·РґР°С‚СЊ РѕР±СЉРµРєС‚, РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ (С‚.Рµ. action)                $controllerObject = new $controllerName; // РЎРѕР·РґР°РµРј РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° РЅСѓР¶РЅРѕРіРѕ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°//                $result = $controllerObject->$actionName($parameters);                // Р’ РґР°РЅРЅРѕРј СЃР»СѓС‡Р°Рµ РїР°СЂР°РјРµС‚СЂС‹ РёР· РјР°СЃРёРІР° Р±СѓРґСѓС‚ РїРµСЂРµРґР°РІР°С‚СЃСЏ РєР°Рє РїРµСЂРµРјРµРЅРЅС‹Рµ                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);                if ($result != null) {                    break;                }            }        }    }}

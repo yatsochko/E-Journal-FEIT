@@ -1,17 +1,1 @@
-<?php
-
-// FRONT CONTROLLER
-
-// 1.Îáùèå íàñòğîéêè
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// 2.Ïîäêëş÷åíèå ôàéëîâ ñèñòåìû
-define('ROOT', dirname(__FILE__));
-require_once(ROOT . '/components/Router.php');
-require_once(ROOT . '/components/Db.php');
-
-// 3.Âûçîâ Router
-
-$router = new Router();
-$router->run();
+<?php// FRONT CONTROLLER// 1.ĞĞ±Ñ‰Ğ¸Ğµ Ğ½Ğ°ÑÑ‚Ñ€Ğ¾Ğ¹ĞºĞ¸ini_set('display_errors', 1);error_reporting(E_ALL);session_start();// 2.ĞŸĞ¾Ğ´ĞºĞ»ÑÑ‡ĞµĞ½Ğ¸Ğµ Ñ„Ğ°Ğ¹Ğ»Ğ¾Ğ² ÑĞ¸ÑÑ‚ĞµĞ¼Ñ‹define('ROOT', dirname(__FILE__));require_once(ROOT . '/components/Router.php');require_once(ROOT . '/components/Db.php');// 3.Ğ’Ñ‹Ğ·Ğ¾Ğ² Router$router = new Router();$router->run();
