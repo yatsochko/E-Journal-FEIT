@@ -1,6 +1,6 @@
 <?php
 /**
- * Êîíòðîëëåð CourseController
+ * ÐšÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€ CourseController
  */
 
 include_once ROOT . '/models/Group.php';
@@ -9,13 +9,13 @@ class CourseController
 {
 
     /**
-     * Action äëÿ ãëàâíîé ñòðàíèöû
+     * Action Ð´Ð»Ñ Ð³Ð»Ð°Ð²Ð½Ð¾Ð¹ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹
      */
     public function actionIndex($course_id)
     {
         $GroupsList = Group::getGroupsListByIdCourse($course_id);
 
-        // Ïîäêëþ÷àåì âèä
+        // ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ Ð²Ð¸Ð´
         require_once(ROOT . '/views/course/index.php');
         return true;
     }
