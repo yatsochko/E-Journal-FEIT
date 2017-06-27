@@ -2,13 +2,9 @@
 
 class Group
 {
-    /*
-     * Returns single news item with specified id
-     * @param integer $id
-     */
     public static function getGroupsListByIdCourse($course_id)
     {
-        $id = intval($course_id);
+        $course_id = intval($course_id);
 
         $db = Db::getConnection();
 

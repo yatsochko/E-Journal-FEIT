@@ -30,11 +30,4 @@
     ?>
 </ul>
 
-<?php
-echo '<pre>';
-print_r($SubjectList);
-echo '</pre>';
-?>
-
-
 <?php include ROOT . '/views/layouts/footer.php'; ?>

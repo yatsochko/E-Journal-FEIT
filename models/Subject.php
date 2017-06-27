@@ -2,13 +2,9 @@
 
 class Subject
 {
-    /*
-     * Returns single news item with specified id
-     * @param integer $id
-     */
     public static function getSubjectsListByIdGroup($group_id)
     {
-        $id = intval($group_id);
+        $group_id = intval($group_id);
 
         $db = Db::getConnection();
 
@@ -16,7 +12,7 @@ class Subject
             . ' FROM subjects s'
             . ' INNER JOIN relations_gr_subj_lect r ON s.id=r.id_subject'
             . ' INNER JOIN lectors l ON l.id=r.id_lector'
-            . ' WHERE r.id_group='. $group_id);
+            . ' WHERE r.id_group=' . $group_id);
 
         $result->setFetchMode(PDO::FETCH_ASSOC); //[id] => 2
 
@@ -30,5 +26,24 @@ class Subject
         }
 
         return $SubjectsList;
+    }
+
+    public static function getNumberLabsAndRgrs($group_id, $subject_id)
+    {
+        $group_id = intval($group_id);
+        $subject_id = intval($subject_id);
+
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT num_lab, num_rgr'
+            . ' FROM relations_gr_subj_lect'
+            . ' WHERE id_group=' . $group_id
+            . ' AND id_subject=' . $subject_id);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC); //[id] => 2
+
+        $NumberLabsAndRgrs = $result->fetch();
+
+        return $NumberLabsAndRgrs;
     }
 }
