@@ -3,8 +3,6 @@
  * Контроллер LoginController
  */
 
-include_once ROOT . '/models/Group.php';
-include_once ROOT . '/models/Subject.php';
 
 class LoginController
 {
