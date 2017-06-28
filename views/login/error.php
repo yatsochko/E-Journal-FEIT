@@ -7,5 +7,5 @@
 </nav>
 <div class="alert alert-dismissible alert-warning">
     <h3>Access error!</h3>
-    <p>Ви вже авторизовані! <a href="/logout.php" class="alert-link">Вийти</a></p>
+    <p>Ви вже авторизовані! <a href="/logout" class="alert-link">Вийти</a></p>
 </div>

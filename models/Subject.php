@@ -79,4 +79,24 @@ class Subject
         return $SubjectsList;
     }
 
+    public static function getSubjectsList()
+    {
+
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT *'
+            . ' FROM subjects'
+            . ' ORDER BY id');
+
+        $result->setFetchMode(PDO::FETCH_ASSOC); //[id] => 2
+
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $SubjectsList[$i]['id'] = $row['id'];
+            $SubjectsList[$i]['subject_name'] = $row['subject_name'];
+            $i++;
+        }
+
+        return $SubjectsList;
+    }
 }

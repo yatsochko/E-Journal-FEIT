@@ -7,10 +7,6 @@ include_once ROOT . '/models/Subject.php';
 include_once ROOT . '/models/Student.php';
 include_once ROOT . '/models/Marks.php';
 
-
-include_once ROOT . '/models/Group.php';
-
-
 class LectorController
 {
 
