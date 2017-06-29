@@ -4,6 +4,8 @@ return array(
     'login' => 'login/index',
     'logout' => 'logout/index',
     'feedback' => 'feedback/index',
+    'admin/mail/list' => 'admin/mail',
+    'admin/ajax/deletemail' => 'admin/ajaxDeleteMail',
     'admin/ajax/deletestudent' => 'admin/ajaxDeleteStudent',
     'admin/ajax/getgroups/([0-9]+)' => 'admin/ajaxGetGroupsByIdCourse/$1',
 //    'admin/ajax/addlector' => 'admin/ajaxAddLector',

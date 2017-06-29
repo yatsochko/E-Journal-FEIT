@@ -16,7 +16,7 @@
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-2" aria-expanded="false" style="height: 1px;">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#"><?=$_SESSION['logged_user']?><span class="sr-only">(current)</span></a></li>
-                    <li><a href="/mail/list">Пошта<span class="mail_num"><?=$new_num?></span></a></li>
+                    <li><a href="/admin/mail/list">Пошта<span class="mail_num"><?=$new_num?></span></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/logout">Вихід</a></li>

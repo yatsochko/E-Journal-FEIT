@@ -6,9 +6,9 @@
 include_once ROOT . '/models/Lector.php';
 include_once ROOT . '/models/Subject.php';
 include_once ROOT . '/models/Group.php';
+include_once ROOT . '/models/Mail.php';
 
 include_once ROOT . '/models/Student.php';
-include_once ROOT . '/models/Marks.php';
 
 class AdminController
 {
@@ -26,6 +26,8 @@ class AdminController
             $groups2st = Group::getGroupsListByIdCourse(2);
             $groups3st = Group::getGroupsListByIdCourse(3);
             $groups4st = Group::getGroupsListByIdCourse(4);
+            $MailList = Mail::getMailList();
+            $new_num = $this->NumberOfNewMail($MailList);
 
 
 //            require_once("../database.php");
@@ -50,6 +52,38 @@ class AdminController
         // Подключаем вид
         require_once(ROOT . '/views/admin/index.php');
         return true;
+    }
+
+    public function actionMail()
+    {
+        $MailList = Mail::getMailList();
+
+        // Подключаем вид
+        require_once(ROOT . '/views/admin/mail_list.php');
+    }
+
+    public function actionAjaxDeleteMail()
+    {
+        $id = $_POST["id"];
+
+        $db = Db::getConnection();
+
+        $sql = 'DELETE FROM mail WHERE id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id);
+        $result->execute();
+    }
+
+    public function NumberOfNewMail($MailList)
+    {
+        $new_num = 0;
+        foreach($MailList as $letters){
+            if(!$letters['mail_read']){
+                $new_num ++;
+            }
+        }
+        return $new_num;
     }
 
     public function actionAjaxAddLector()
